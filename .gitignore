@@ -3,6 +3,18 @@
 node_modules/
 playground/
 .xml
+*.env
+
+ # Node build artifacts
+npm-debug.log
+
+# Local development
+*.dev
+.DS_Store
+
+# Docker
+Dockerfile
+docker-compose.yml
 
 public/uploads/jim
 public/uploads/jimo
