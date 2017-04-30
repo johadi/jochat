@@ -6,7 +6,8 @@ function processLogin(username,password){
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: "http://localhost:5000/user/login",
+        //url: "http://localhost:5000/user/login",
+        url: "https://deve-chat.herokuapp.com/user/login",
         data: JSON.stringify(data) ,//converts the string to json data and sends to server
         contentType: "application/json", //use req.body to get your data.if you don't use this, you will have to get your data using req.params
         success: function(returnedData) {
@@ -43,7 +44,8 @@ function processSignup(username,fullname,email,password){
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: "http://localhost:5000/user/signup",
+        //url: "http://localhost:5000/user/signup",
+        url: "https://deve-chat.herokuapp.com/user/signup",
         data: JSON.stringify(data) ,//converts the string to json data and sends to server
         contentType: "application/json", //use req.body to get your data.if you don't use this, you will have to get your data using req.params
         success: function(returnedData) {
