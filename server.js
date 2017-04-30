@@ -6,6 +6,7 @@ const engine=require('ejs-mate');
 const logger=require('morgan');
 const cookieParser=require('cookie-parser');
 const Siofu=require('socketio-file-upload');
+const config=require('config');
 
 const mongooseSetting=require('./utils/mongoose_setting');
 mongooseSetting();
@@ -37,7 +38,7 @@ routeIndex(app);
 // app.get('/chat',(req,res)=>{
 //     res.render('chat');
 // });
-server.listen(5000,(err)=>{
+server.listen(config.get('app.port'),(err)=>{
     if(err) return console.log(err);
     console.log('app running on port 5000');
 });

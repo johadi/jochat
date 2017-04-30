@@ -1,5 +1,9 @@
 {
+  "app": {
+    "port": "5000"
+  },
   "db": {
-    "url": "mongodb://127.0.0.1/jochat"
+//    "url": "mongodb://127.0.0.1/jochat",
+    "url": "mongodb://devchat:75867586@ds127341.mlab.com:27341/devchat"
   }
 }
