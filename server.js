@@ -29,6 +29,7 @@ app.use(logger('dev'));
 app.set('views',path.join(__dirname,'views'));
 app.engine('ejs',engine);
 app.set('view engine','ejs');
+app.set('port',process.env.PORT || config.get('app.port'))
 
 let socket=require('./socket/socket');
 
@@ -38,9 +39,9 @@ routeIndex(app);
 // app.get('/chat',(req,res)=>{
 //     res.render('chat');
 // });
-server.listen(config.get('app.port'),(err)=>{
+server.listen(app.get('port'),(err)=>{
     if(err) return console.log(err);
-    console.log('app running on port 5000');
+    console.log('app running on port '+app.get('port'));
 });
 //siofu.listen(server);
 
