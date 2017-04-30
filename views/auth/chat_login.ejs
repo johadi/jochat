@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Join | JoChat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link href="/css/styles.css" rel="stylesheet" >
+</head>
+<body class="centered-form">
+<div class="centered-form__form">
+    <form action="/chat">
+        <div class="form-field">
+            <h3>Join a Chat</h3>
+        </div>
+        <div class="form-field">
+            <label>Display name</label>
+            <input type="text" name="name" autofocus required/>
+        </div>
+        <div class="form-field" id="active_rooms">
+            <label>Rooms</label>
+            <select>
+                <option>-Select Room-</option>
+            </select>
+        </div>
+        <!--<div class="form-field">
+            <label>Room name</label>
+            <input type="text" name="room">
+        </div>-->
+        <div class="form-field">
+            <button>Join</button>
+        </div>
+    </form>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/libs/jquery-3.2.0.min.js"></script>
+<script src="/js/libs/lodash.js"></script>
+<script src="/js/login.js"></script>
+</body>
+</html>

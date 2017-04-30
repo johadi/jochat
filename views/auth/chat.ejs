@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Chat | JoChat</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link href="/css/styles.css" rel="stylesheet" >
+<link href="/template/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="/js/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" >
+<style>
+    .chat__main{
+        position: relative;
+    }
+    #top{
+        position: absolute;
+        top: 5px;
+        left: 15px;
+        border: 3px solid #00B7FF;
+    }
+    #leave{
+        color: #ffffff;
+        background-color: #4682B4;
+        text-align: center;
+        padding: 5px;
+    }
+    #leave a{
+        text-decoration: inherit;
+        color: inherit;
+    }
+    #messages{
+        padding-top: 50px;
+    }
+    /*
+    upload file styling
+    */
+    #fileselector {
+        padding: 0px;
+    }
+    #upload-file-selector {
+        display:none;
+        padding: 0px;
+    }
+    .margin-correction {
+        padding: 0px;
+
+    }
+    /*
+    end of upload file styling
+    */
+</style>
+</head>
+<body class="chat">
+<div class="chat__sidebar">
+    <h3>People <small style="color: lightgreen;" id="online"></small></h3>
+    <div id="users"></div>
+</div>
+
+<div class="chat__main">
+    <div id="top">
+        <p id="leave"><a href="#">Leave Room</a></p>
+    </div>
+    <ol id="messages" class="chat__messages"></ol>
+    <p style="color: darkgreen;margin-left: 20px;margin-top: 10px; font-size: 14px" id="typing"></p>
+    <div class="chat__footer">
+        <form id="message-form">
+            <i class="fa fa-smile-o margin-correction"></i>
+            <input type="text" name="message" placeholder="Your Message" autofocus autocomplete="off"/>
+            <span id="fileselector">
+               <label class="btn btn-default" for="upload-file-selector">
+                  <input id="upload-file-selector" type="file">
+                  <i class="fa fa-file-image-o margin-correction"></i>
+               </label>
+            </span>
+            <button>Send</button>
+        </form>
+        <button id="send-location">Send Location</button>
+    </div>
+</div>
+<script id="message-template" type="text/template">
+    <li class="message">
+        <div class="message__title">
+            <h4>{{from}}</h4>
+            <span>{{createdAt}}</span>
+        </div>
+        <div class="message__body">
+            <p>{{text}}</p>
+        </div>
+    </li>
+</script>
+
+<script id="location-message-template" type="text/template">
+    <li class="message">
+        <div class="message__title">
+            <h4>{{from}}</h4>
+            <span>{{createdAt}}</span>
+        </div>
+        <div class="message__body">
+            <p>
+                <a href="{{url}}" target="_blank">My current location</a>
+            </p>
+        </div>
+    </li>
+</script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/libs/jquery-3.2.0.min.js"></script>
+<script src="/js/libs/lodash.js"></script>
+<script src="/js/libs/moment.js"></script>
+<script src="/js/libs/mustache.js"></script>
+<script src="/js/libs/deparam.js"></script>
+<script src="/js/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="/js/chat.js"></script>
+
+</body>
+</html>

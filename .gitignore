@@ -1,0 +1,12 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+node_modules/
+playground/
+.xml
+
+public/uploads/jim
+public/uploads/jimo
+public/uploads/johadi10
+public/uploads/picture1
+public/uploads/picture2
+public/uploads/profile_pictures/*

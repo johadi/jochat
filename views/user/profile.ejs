@@ -1,0 +1,73 @@
+<%- layout('profile_page_template.ejs') %>
+<div class="container">
+    <div class="row panel panel-success p-30 shadow" style="padding: 20px 20px 20px 20px">
+        <div class="col-md-6 p-30 shadow" style="margin-bottom: 20px">
+            <div class="row">
+                <h2 class="small-tag text-center"><strong>Your Photo</strong></h2>
+
+                <form id="upload_form" action="/action_page.php">
+                    <div class="col-md-12">
+                        <div class=" col-md-8 col-sm-offset-2 text-center img-div">
+                            <iframe id="img-frame" frameborder="2" scrolling="no" width="200px" height="200px"
+                                    src="<%=user.avatar_path%>" name="imgbox" id="imgbox">
+                                <p>iframes are not supported by your browser.</p>
+                            </iframe>
+                            <div class="progress" id="progress" style="display: none">
+                                <div class="progress-bar progress-bar-success" id="progressbar" role="progressbar" aria-valuenow="1"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                                </div>
+                            </div>
+                            <label class="form-control">
+                                <input id="avatar_upload" type="file" name="file" accept="image/x-png,image/jpeg" />
+                                <i class="fa fa-lg fa-camera" aria-hidden="true"></i> Click to change Photo
+                            </label>
+                            <input type="hidden" id="avatar_username" value="<%=user.username%>">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6 well well-lg">
+                <h2 class="small-tag text-center"><strong>Your Details</strong></h2>
+
+                <div class="clearfix"></div>
+                <form class="form-horizontal forms" action="/profile" role="form" method="POST">
+                    <div class="form-group">
+                        <label for="email" class="col-sm-3 control-label">Username</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="email" name="email" value="<%=user.username%>" disabled >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-sm-3 control-label">Email</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="email" name="email" value="<%=user.email%>" >
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="name" class="col-sm-3 control-label">Full Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="name" required="" name="full_name" value="<%=user.fullname%>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone1" class="col-sm-3 control-label">Phone No</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="phone1" name="mobile" value="08163041269">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone2" class="col-sm-3 control-label">Preferred Language</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="phone2" name="alternative_mobile" value="NodeJs">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <button type="submit" class="btn btn-success pull-right"><i class="fa fa-lg fa-save"></i> Update Your Details</button>
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+<%- layout('template3.ejs') %>
+<!-- Header -->
+<div class="clearfix">
+
+</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-md-3 col-sm-5 well">
+                <img class="img-responsive img-circle img-centered" src="<%=user.avatar_path%>" alt="">
+                <div class="clearfix"></div>
+                <ul class="list-group text-center" style="margin-top: 20px">
+                    <li class="list-group-item"><%=user.username%></li>
+                    <li class="list-group-item"><%=user.fullname%></li>
+                    <li class="list-group-item"><%=user.email%></li>
+                    <li class="list-group-item"><span class="badge">15</span>Tree nodes</li>
+                </ul>
+            </div>
+            <div class="col-md-4 hidden-sm" style="padding-bottom: 15px">
+                <img class="img-responsive img-centered" src="/template/img/social.gif" alt="">
+                <hr/>
+                <h5 class="list-group-item-heading text-center">Your recent Quotes</h5>
+                <hr/>
+                <% if(my_quotes && my_quotes.length>0){
+                     my_quotes.forEach(function(my_quote){
+                 %>
+                <p class="list-group-item" style="font-size: inherit; background-color: #e1e1e1; margin: 0px 0px 5px 0px">
+                    <%=my_quote.text%>
+                </p>
+                <%
+                     })
+
+                }else{%>
+                <p class="list-group-item">
+                    You have no Quote at the moment
+                </p>
+                <%}%>
+            </div>
+            <div class="col-md-3 col-sm-5 well">
+                <p>
+                    <a data-toggle="modal" href="#chat-modal" class="btn btn-primary btn-lg btn-block">Join a Chat</a>
+                    <a href="/nodes" class="btn btn-default btn-lg btn-block">My Tree Nodes</a>
+                    <a data-toggle="modal" href="#quote-modal" class="btn btn-default btn-lg btn-block">Make a Quote</a>
+                </p>
+                <hr/>
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">
+                        <h5 class="list-group-item-heading">Top Quotes Today</h5>
+                    </a>
+                </div>
+                <% if(quotes && quotes.length>0){
+                quotes.forEach(function(quote){
+                %>
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <h5 class="list-group-item-heading"><%=quote.user.fullname%></h5>
+                        <p class="list-group-item-text" style="font-size: inherit">
+                            <%=quote.text%>
+                        </p>
+                    </a>
+                </div>
+                <%
+                })
+
+                }else{%>
+                <p class="list-group-item">
+                    No Quote at the moment
+                </p>
+                <%}%>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <!-- Chat Modal -->
+        <div class="modal fade" id="chat-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Developers are online to chat with you</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form" action="/chat" method="get">
+                            <div class="form-group" id="active_rooms">
+                                <label class="text-success" for="room">Pick a room to start chatting with developers</label>
+                                <select class="form-control" id="room" name="room">
+                                    <option>-Select Room-</option>
+                                    <option>Angular</option>
+                                    <option>Angular 2</option>
+                                    <option>React</option>
+                                    <option>NodeJs</option>
+                                    <option>PHP</option>
+                                    <option>Python</option>
+                                    <option>Java</option>
+                                    <option>Android</option>
+                                    <option>C++</option>
+                                    <option>C#</option>
+                                    <option>Ruby</option>
+                                </select>
+                            </div>
+                            <input type="hidden" name="name" value="<%=user.username%>" />
+                            <button type="submit" class="btn btn-success"><i class="fa fa-handshake-o"></i> Join room</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <!--Quote Modal -->
+        <div class="modal fade" id="quote-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Make a Quote for your coding moment</h4>
+                    </div>
+                    <form role="form" action="/quote" method="post">
+                    <div class="modal-body">
+                            <div class="form-group" id="active_rooms">
+                                <label class="text-success" for="room">Let your tree nodes see how you are feeling at the moment with coding
+                                    <i class="fa fa-smile-o"></i></label>
+                                <textarea required rows="3" maxlength="120" class="form-control" id="quote"
+                                          name="quote" autofocus placeholder="How are you feeling at the moment with coding?"></textarea>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Send</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
