@@ -93,22 +93,22 @@ let changePicture=(old_path,new_path,cloud_path,cloudinary)=>{
 
 }
 //uncomment when saving to local computer
-// let changePicture2=(old_path,new_path)=>{
-//     return new Promise((resolve,reject)=>{
-//         fs.rename(old_path, new_path, (err)=> {//note: rename also remove file from the old path it has before
-//             if ( err ) return reject(err);
-//             jimp.read(new_path,function(err,image){
-//                 if(err) return reject(err);
-//                 image.resize(200,200)
-//                     .quality(100)
-//                     .write(new_path);
-//                 return resolve(new_path);
-//             });
-//
-//         });
-//     });
-//
-// }
+let changePicture2=(old_path,new_path)=>{
+    return new Promise((resolve,reject)=>{
+        fs.rename(old_path, new_path, (err)=> {//note: rename also remove file from the old path it has before
+            if ( err ) return reject(err);
+            jimp.read(new_path,function(err,image){
+                if(err) return reject(err);
+                image.resize(200,200)
+                    .quality(100)
+                    .write(new_path);
+                return resolve(new_path);
+            });
+
+        });
+    });
+
+}
 
 //create a directory or empty it if it exists
 let createDirectory=(directoryPath)=> {
