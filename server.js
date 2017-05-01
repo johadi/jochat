@@ -29,7 +29,7 @@ app.use(logger('dev'));
 app.set('views',path.join(__dirname,'views'));
 app.engine('ejs',engine);
 app.set('view engine','ejs');
-app.set('port',process.env.PORT || config.get('app.port'));
+app.set('port',process.env.PORT || config.get('app.port'))
 
 let socket=require('./socket/socket');
 // let socket=require('./socket/socket_local');

@@ -9,7 +9,6 @@ function processLogin(username,password){
         type: "POST",
         dataType: "json",
         url: url,
-        //url: "https://devechat.herokuapp.com/user/login",
         data: JSON.stringify(data) ,//converts the string to json data and sends to server
         contentType: "application/json", //use req.body to get your data.if you don't use this, you will have to get your data using req.params
         success: function(returnedData) {
