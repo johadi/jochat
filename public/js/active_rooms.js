@@ -18,10 +18,18 @@ socket.on('room-list',function(rooms){//something like {Angular: 3,React: 1,PHP:
     select.append(jQuery('<option></option>').attr('value','').text('-Select Room-'));
 
     online_rooms.forEach(function(room){//online rooms added to the select field
-        select.append(jQuery('<option></option>').attr('value',room).text(room+'  ('+rooms[room]+' online)'));
+        var value=room;
+        if(room=='angular 2') value='angular2';
+        if(room=='c++') value='cplus';
+        if(room=='c#') value='csharp';
+        select.append(jQuery('<option></option>').attr('value',value).text(room+'  ('+rooms[room]+' online)'));
     });
     offline_rooms.forEach(function(room){//offline rooms added to the select field too
-        select.append(jQuery('<option></option>').attr('value',room).text(room));
+        var value=room;
+        if(room=='angular 2') value='angular2';
+        if(room=='c++') value='cplus';
+        if(room=='c#') value='csharp';
+        select.append(jQuery('<option></option>').attr('value',value).text(room));
     });
 
     jQuery('#active_rooms').html(select);

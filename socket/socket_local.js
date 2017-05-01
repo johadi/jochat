@@ -4,35 +4,23 @@ const moment=require('moment');
 const path=require('path');
 const jimp=require('jimp');
 const async=require('async');
-const config=require('config');
-
-//cloudinary module for uploading images/files to cloud
-const cloudinary=require('cloudinary');
 
 const {generateRealMessage,findUserInfoFromDB,removeTempFiles,renameFile,changePicture}=require('../utils/helpers');
 const {isRealString,realValue,isImageAvailable} =require('../utils/validation');
 const {ChattingUsers}=require('../utils/chattingUsers');
 const NodeGeocoder=require('node-geocoder');
-
-let History=require('../models/history');
-let User=require('../models/user');
-
-//settings for geocoder
+const API_KEY='1028bf26864cc6922da7';
 const options = {
-    provider: config.get('geocoder.provider'),
+    provider: 'locationiq',
+
     // Optional depending on the providers
     httpAdapter: 'https', // Default
-    apiKey: config.get('geocoder.api_key'), // for Mapquest, OpenCage, Google Premier
+    apiKey: API_KEY, // for Mapquest, OpenCage, Google Premier
     formatter: null         // 'gpx', 'string', ...
 }
+let History=require('../models/history');
+let User=require('../models/user');
 const geocoder=NodeGeocoder(options);
-
-//settings for cloudinary
-cloudinary.config({
-    cloud_name:  config.get('cloudinary.cloud_name'),
-    api_key: config.get('cloudinary.api_key'),
-    api_secret: config.get('cloudinary.api_secret')
-});
 
 
 module.exports=(server,Siofu)=>{
@@ -129,7 +117,7 @@ module.exports=(server,Siofu)=>{
         uploader.dir = path.join(__dirname,'../public/uploads/');
         // Do something when a file is saved:
         uploader.on("saved", function(event){
-            //console.log(event.file);
+            console.log(event.file);
         });
 
         // Error handler:
@@ -155,7 +143,7 @@ module.exports=(server,Siofu)=>{
                     .then(newPath=>{
                         if(newPath){
                             socket.emit('file-uploaded',{path: oldNamePath,relative_path: newNameRelativePath},(msg)=>{
-                                console.log('browser recieves the file');
+                                console.log('browser recieves the file', msg);
                             });
                         }
                     })
@@ -175,19 +163,14 @@ module.exports=(server,Siofu)=>{
                 const newNamePath=path.join(__dirname,"../public/uploads/profile_pictures/"+newFileName.trim().toLowerCase());
                 const newNameRelativePath="/uploads/profile_pictures/"+newFileName.trim().toLowerCase();//this is used by browser to display file later
 
-                const cloudPath="devechat/profile_pictures/"+uploader_username; //remember cloud_path needs no file extension.
-                let cloudUrl="";
-
-                changePicture(oldNamePath,newNamePath,cloudPath,cloudinary)
+                changePicture(oldNamePath,newNamePath)
                     .then(newPath=>{
                         if(newPath){
-                            cloudUrl=newPath;
                             return User.findOne({username: uploader_username})
                                 .exec()
                                 .then(user=>{
                                     if(user){
-                                        // user.avatar_path=newNameRelativePath; //uncomment if you are saving to local computer
-                                        user.avatar_path=cloudUrl;//comment if saving to local computer
+                                        user.avatar_path=newNameRelativePath;
                                         return user.save();
                                     }
                                 })
@@ -201,8 +184,7 @@ module.exports=(server,Siofu)=>{
                                 .then(user_history=>{
                                     if(user_history){
                                         user_history.forEach(history=>{
-                                            // history.user_avatar=newNameRelativePath; //uncomment if saving to local computer
-                                            history.user_avatar=cloudUrl;
+                                            history.user_avatar=newNameRelativePath;
                                             history.save();
                                         })
                                     }
@@ -210,8 +192,7 @@ module.exports=(server,Siofu)=>{
                         }
                         //emit file-uploaded event
                         if(user){
-                            //relative_path: newNameRelativePath //use this if saving to folder in socket.emit below
-                            socket.emit('file-uploaded',{path: oldNamePath,relative_path: cloudUrl},(msg)=>{
+                            socket.emit('file-uploaded',{path: oldNamePath,relative_path: newNameRelativePath},(msg)=>{
                                 console.log('browser recieves the file', msg);
                             });
                         }
@@ -258,49 +239,23 @@ module.exports=(server,Siofu)=>{
                         if(isImageAvailable(message.path)){//check if image is available in the message
                             const ext=message.path.split(".").pop();
                             const newFilename=user.name+"_"+createdAt+"."+ext.toLowerCase();
+
                             const oldPath=path.join(__dirname,'../public/'+message.path);
+                            const newPath=path.join(__dirname,'../public/uploads/'+user.name+'/'+newFilename);
+                            const newRelativePath='/uploads/'+user.name+'/'+newFilename;
 
-                            //uncomment if you want to save locally to computer
-                            // const newPath=path.join(__dirname,'../public/uploads/'+user.name+'/'+newFilename);
-                            // const newRelativePath='/uploads/'+user.name+'/'+newFilename;
+                            jimp.read(oldPath,function(err,image){
+                                if(err) throw err;
+                                image.resize(200,200)
+                                    .quality(100)
+                                    .write(newPath);
+                                fs.unlink(oldPath,(err)=>{
+                                    if(err) throw err;
+                                    message.path=newRelativePath;
+                                    cb(null,user_info);
+                                });
 
-                            //comment if you don't want to save images/files to cloud
-                            const cloudFileName=user.name+"_"+createdAt; //remember it has no file extension
-                            const cloudPath="devechat/uploads/"+user.name+"/"+cloudFileName;
-
-                            cloudinary.uploader.upload(oldPath,(result)=> {
-                                        fs.unlink(oldPath,(err)=>{
-                                            if(err) throw err;
-                                            //console.log(result);
-                                            message.path=result.url;
-                                            cb(null,user_info);
-                                        });
-                                },
-                                {
-                                    public_id: cloudPath,//images/files are saved according to this path
-                                    width: 200,
-                                    height: 200
-                                    // eager: [
-                                    //     { width: 200, height: 200, crop: 'thumb', gravity: 'face',
-                                    //         radius: 20, effect: 'sepia' },
-                                    //     { width: 100, height: 150, crop: 'fit', format: 'png' }
-                                    // ],
-                                    // tags: ['special', 'for_homepage']
-                                } );
-
-                            //uncomment if you want to save to computer
-                            // jimp.read(oldPath,function(err,image){
-                            //     if(err) throw err;
-                            //     image.resize(200,200)
-                            //         .quality(100)
-                            //         .write(newPath);
-                            //     fs.unlink(oldPath,(err)=>{
-                            //         if(err) throw err;
-                            //         message.path=newRelativePath;
-                            //         cb(null,user_info);
-                            //     });
-                            //
-                            // });
+                            });
                         }//end of if isImageAvailable()
                         else{
                             cb(null,user_info);
@@ -325,7 +280,11 @@ module.exports=(server,Siofu)=>{
 
                                     //save message to DB as history
                                     let history=new History({from: user.name, text: message.text,file_path: message.path, room: user.room, state, country,user_avatar: user_info.avatar_path, createdAt});
-                                    history.save();
+                                    history.save()
+                                        .then((saved_history)=>{
+                                            return console.log(saved_history);
+                                        })
+                                        .catch((err)=>console.log(err));
                                     //history DB format: {room: 'standard',from: 'jimoh',text: 'hello',createdAt: 23456,kogi,nigeria}
                                 })
                                 .catch(err=>{
@@ -338,7 +297,11 @@ module.exports=(server,Siofu)=>{
 
                             //save message to DB as history
                             let history=new History({from: user.name, text: message.text,file_path: message.path, room: user.room, state, country,user_avatar: user_info.avatar_path, createdAt});
-                            history.save();
+                            history.save()
+                                .then((saved_history)=>{
+                                    return console.log(saved_history);
+                                })
+                                .catch((err)=>console.log(err));
                             //history DB format: {room: 'standard',from: 'jimoh',text: 'hello',createdAt: 23456,kogi,nigeria}
                         }
                     }//,

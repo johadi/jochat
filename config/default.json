@@ -3,7 +3,16 @@
     "port": 5000
   },
   "db": {
-//    "url": "mongodb://127.0.0.1/jochat",
+//      "url": "mongodb://127.0.0.1/jochat"
     "url": "mongodb://devchat:75867586@ds127341.mlab.com:27341/devchat"
+  },
+  "geocoder": {
+    "api_key": "1028bf26864cc6922da7",
+    "provider": "locationiq"
+  },
+  "cloudinary": {
+    "api_key": "752993747339659",
+    "api_secret": "5FzXdCawGzDGWLOOl4aatoCDtyg",
+    "cloud_name": "devechat"
   }
 }

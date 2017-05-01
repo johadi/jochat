@@ -53,6 +53,24 @@
 </p>
 <div class="container">
     <form role="form" id="form" action="/test" method="post" enctype="multipart/form-data">
+        <hr/>
+        <% if(message.length>0) {%>
+        <% if(message=='success'){%>
+        <div class="alert alert-success alert-dismissible text-center">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times</span>
+            </button>
+            Upload successful
+        </div>
+        <%}else if(message=='fail'){%>
+        <div class="alert alert-danger alert-dismissible text-center">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times</span>
+            </button>
+            Fail to Upload picture
+        </div>
+        <%}%>
+        <%}%>
         <div class="row justify-content-center">
             <div class="col-10">
                 <div class="text-left">
@@ -66,6 +84,9 @@
                         <textarea class="form-control textarea-control" rows="3" placeholder="Textarea with emoji Unicode input" data-emojiable="true" data-emoji-input="unicode"></textarea>
                     </p>
                     <p class="lead emoji-picker-container">
+                        <input type="file" class="form-control" name="image">
+                    </p>
+                    <p class="lead emoji-picker-container">
                         <input type="hidden" name="username" value="johadi" />
                         <button type="submit" class="btn btn-success">Submit</button><span id="dis">🤗</span>
                         <button id="location" class="btn btn-primary">Send Location</button>
@@ -77,6 +98,11 @@
                         </label>
                         </span>
                     </p>
+                    <%if(imagee.length>0 || imagee !='undefined'){%>
+                    <p class="lead emoji-picker-container">
+                        <img class="img img-circle" src="<%=imagee%>" alt="User Image" />
+                    </p>
+                    <%}%>
                 </div>
             </div>
         </div>
@@ -202,21 +228,3 @@ $(document).ready(function() {//used to convert any emoji unicode to emoji in br
 
 <!-- Mirrored from getbootstrap.com/examples/jumbotron/ by HTTrack Website Copier/3.x [XR&CO'2013], Wed, 02 Oct 2013 12:14:30 GMT -->
 </html>
-<!--<hr/>-->
-<!--<% if(message.length>0) {%>-->
-<!--<% if(message=='success'){%>-->
-<!--<div class="alert alert-success alert-dismissible text-center">-->
-<!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
-<!--<span aria-hidden="true">&times</span>-->
-<!--</button>-->
-<!--Profile Updated Successfully-->
-<!--</div>-->
-<!--<%}else if(message=='fail'){%>-->
-<!--<div class="alert alert-danger alert-dismissible text-center">-->
-<!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
-<!--<span aria-hidden="true">&times</span>-->
-<!--</button>-->
-<!--Fail to Update Profile-->
-<!--</div>-->
-<!--<%}%>-->
-<!--<%}%>-->

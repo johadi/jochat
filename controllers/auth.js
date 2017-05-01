@@ -5,117 +5,10 @@ const bcrypt=require('bcrypt-nodejs');
 const _=require('lodash');
 const fs = require('fs');
 const path = require('path');
+const {createDirectory} =require('../utils/helpers');
 
 //NOTE: any changes made to this array should be reflected in same array for active_room.js of public/js folder as they work together
-const all_rooms=['angular','angular 2','react','nodejs','php','python','java','android','c++','c#','ruby','sql','nosql'];
-
-//delete a directory. works with deleteFile() above
-const deleteDirectory=(dir)=> {
-    return new Promise( (resolve, reject)=> {
-        fs.access(dir, (err)=> {
-            if (err) {
-                return reject(err);
-            }
-            fs.readdir(dir, (err, files)=> {
-                if (err) {
-                    return reject(err);
-                }
-                Promise.all(files.map( (file)=> {
-                    return deleteFile(dir, file);
-                })).then(()=> {
-                    fs.rmdir(dir, (err)=> {
-                        if (err) {
-                            return reject(err);
-                        }
-                        resolve(dir);
-                    });
-                }).catch(reject);
-            });
-        });
-    });
-};
-//create a directory or empty it if it exists
-let createDirectory=(directoryPath)=> {
-    const directory = path.normalize(directoryPath);//normalize path espcially on windows. C://folder1\file = C://folder/file
-
-    return new Promise((resolve, reject) => {
-        fs.stat(directory, (error) => {
-            if (error) {
-                if (error.code === 'ENOENT') {//directory doesn't exist. we can create one
-                    fs.mkdir(directory, (error) => {
-                        if (error) {
-                            reject(error);
-                        } else {
-                            resolve(directory);
-                        }
-                    });
-                } else {
-                    reject(error);
-                }
-            } else {//directory exists
-                fs.readdir(directory, (err, files) => {//empty the directory
-                    if (err) reject(err);
-                    for (const file of files) {
-                        fs.stat(path.join(directory, file),(err,stats)=>{//get info about the content of the existing folder
-                            if(err) reject(err);
-                            else{
-                                if(stats.isDirectory()){//if the existing folder contains a directory
-                                    fs.rmdir(path.join(directory, file),(error)=>{
-                                        if(error) {
-                                            //check if the error is because the sub-folder to remove is not empty
-                                            if(error.code=='ENOTEMPTY'){
-                                                const sub_dir=path.join(directory,file);//get the sub-directory
-                                                fs.readdir(sub_dir,(err,sub_dir_files)=>{//read files in this sub-directory
-                                                    if(err) return reject(err);
-                                                    sub_dir_files.forEach(sub_dir_file=>{//get each files and remove them
-                                                        fs.unlink(path.join(sub_dir, sub_dir_file), error => {//empty the sub-directory
-                                                            if(error){
-                                                                if(error.code=='EPERM'){
-                                                                    return resolve(directory);
-                                                                }else{
-                                                                    return reject(error);
-                                                                }
-                                                            }else{
-                                                                return resolve(directory);
-                                                            }
-                                                        });
-                                                    })
-                                                })
-                                            }else{
-                                                reject(error);
-                                            }
-
-                                        }
-                                        else{
-                                            resolve(directory);
-                                        }
-                                    })
-                                    //this will delete directory. even if it has files in it
-                                    // deleteFile(directory,file)
-                                    //     .then(dir=>resolve(directory))
-                                    //     .catch(err=>reject(err))
-                                }
-                                else{//if folder contains files only,remove or unlink those files
-                                    fs.unlink(path.join(directory, file), error => {
-                                        if(error){
-                                            if(error.code=='EPERM'){
-                                                return resolve(directory);
-                                            }else{
-                                                return reject(error);
-                                            }
-                                        }else{
-                                            resolve(directory);
-                                        }
-                                    });
-                                }
-                            }
-                        });//end of fs.stat()
-                    }//end of for loop
-                });
-            }
-        });
-    });
-}
+const all_rooms=['angular','angular2','react','nodejs','php','python','java','android','cplus','csharp','ruby','sql','nosql'];
 
 module.exports={
     getChatPro(req,res){
@@ -235,11 +128,6 @@ module.exports={
             createDirectory(directoryPath)
                 .then((user_path) => {
                     console.log(`Successfully created directory: '${user_path}'`);
-                    const subDirectory=user_path+'/temp';
-                    return createDirectory(subDirectory);//returns the promise of this createDirectory to be handle by the first createDirectory
-                })
-                .then(user_temp_path=>{
-                    console.log(`Successfully created directory: '${user_temp_path}'`);
                     let obj = req.body;
                     let user = new User(obj);
                     return user.save();//returns the promise of user.save()
