@@ -2,12 +2,14 @@
  * Created by ILYASANATE on 12/04/2017.
  */
 function processLogin(username,password){
-    var data={username: username,password: password}
+    var data={username: username,password: password};
+    // var url="http://localhost:5000/user/login";
+    var url="https://devechat.herokuapp.com/user/login";
     $.ajax({
         type: "POST",
         dataType: "json",
-        // url: "http://localhost:5000/user/login",
-        url: "https://devechat.herokuapp.com/user/login",
+        url: url,
+        //url: "https://devechat.herokuapp.com/user/login",
         data: JSON.stringify(data) ,//converts the string to json data and sends to server
         contentType: "application/json", //use req.body to get your data.if you don't use this, you will have to get your data using req.params
         success: function(returnedData) {
@@ -40,12 +42,13 @@ function processLogin(username,password){
 }
 
 function processSignup(username,fullname,email,password){
-    var data={username: username, fullname: fullname,email: email,password: password}
+    var data={username: username, fullname: fullname,email: email,password: password};
+    // var url="http://localhost:5000/user/signup";
+    var url="https://devechat.herokuapp.com/user/signup";
     $.ajax({
         type: "POST",
         dataType: "json",
-        // url: "http://localhost:5000/user/signup",
-        url: "https://devechat.herokuapp.com/user/signup",
+        url: url,
         data: JSON.stringify(data) ,//converts the string to json data and sends to server
         contentType: "application/json", //use req.body to get your data.if you don't use this, you will have to get your data using req.params
         success: function(returnedData) {

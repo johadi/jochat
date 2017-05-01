@@ -21,6 +21,13 @@ function scrollToBottom(){
         messages.scrollTop(scrollHeight);
     }
 }
+//perform validation when user misbehaves in the browser
+// if(performance.navigation.type==0){//when user type url only
+//     window.location.href="/home";
+// }else
+if(performance.navigation.type == 2){//when user clicks back button to chat
+    window.location.href="/home";
+}
 
 var params=jQuery.deparam(window.location.search);//convert your url query string (i.e ?name=jo&age=20) to object
 socket.on('connect',function(){
@@ -517,16 +524,16 @@ socket.on('typing-reply',function(data){
 // jQuery('#leave').on('click',function(){
 //     alert('hello');
 // });
-// $('#leave').click(function(){
-//     swal({
-//         title: 'Are you sure?',
-//         html: 'You are about to leave '+params.room.toUpperCase()+' room.',
-//         type: 'warning',
-//         showCancelButton: true,
-//         confirmButtonColor: '#3085d6',
-//         cancelButtonColor: '#d33',
-//         confirmButtonText: 'Yes, Leave room!'
-//     }).then(function () {
-//         window.location.href='/home'
-//     });
-// })
+$('#leave').click(function(){
+    swal({
+        title: 'Are you sure?',
+        html: 'You are about to leave '+params.room.toUpperCase()+' room.',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Leave room!'
+    }).then(function () {
+        window.location.href='/home'
+    });
+})

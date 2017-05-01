@@ -60,7 +60,10 @@ module.exports=(server,Siofu)=>{
                 return callback("Join another room instead");
             }
 
-            socket.join(params.room);
+            socket.join(params.room,()=>{
+                console.log('a user joined '+params.room+" room");
+            });
+
             chatUsers.removeUser(socket.id);
             chatUsers.addUsers(socket.id,username,userRoom);
             let createdAt= moment().valueOf();
@@ -368,6 +371,9 @@ module.exports=(server,Siofu)=>{
                 io.emit('room-list',chatUsers.getActiveRooms());
                 io.to(user.room).emit('updateUserList',chatUsers.getUserList(user.room));
                 io.to(user.room).emit('newMessage',generateRealMessage('Admin',`${user.name} has left`,'',createdAt,'','',''));
+                socket.leave(user.room,()=>{
+                    console.log("a user left "+user.room+" room")
+                });
                 removeTempFiles(user.name,user.room)
                     .then(msg=>{
                         if(msg=='ENOENT'){

@@ -131,10 +131,10 @@
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#">My Profile</a></li>
+                                    <li><a href="/profile">My Profile</a></li>
                                     <li><a href="#">My Nodes</a></li>
-                                    <li><a href="#">Leave Room</a></li>
-                                    <li><a href="#">Logout</a></li>
+                                    <li><a href="#" id="leave">Leave Room</a></li>
+                                    <li><a href="/logout">Logout</a></li>
                                 </ul>
                             </div></div>
                     </div><!--new_message_head-->
@@ -230,7 +230,6 @@
             <img src="{{avatar}}" alt="User Avatar" class="img-circle">
         </p>
         <div class="chat-body1 clearfix">
-
             <p>{{text}}</p>
             <div class="chat_time {{location_pull}}">{{createdAt}} <span style="color: green;font-size: 11px;">{{location}}</span></div>
         </div>

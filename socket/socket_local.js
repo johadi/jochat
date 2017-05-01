@@ -4,20 +4,21 @@ const moment=require('moment');
 const path=require('path');
 const jimp=require('jimp');
 const async=require('async');
+const config=require('config');
 
-const {generateRealMessage,findUserInfoFromDB,removeTempFiles,renameFile,changePicture}=require('../utils/helpers');
+const {generateRealMessage,findUserInfoFromDB,removeTempFiles,renameFile,changePicture2}=require('../utils/helpers');
 const {isRealString,realValue,isImageAvailable} =require('../utils/validation');
 const {ChattingUsers}=require('../utils/chattingUsers');
 const NodeGeocoder=require('node-geocoder');
-const API_KEY='1028bf26864cc6922da7';
-const options = {
-    provider: 'locationiq',
 
+const options = {
+    provider: config.get('geocoder.provider'),
     // Optional depending on the providers
     httpAdapter: 'https', // Default
-    apiKey: API_KEY, // for Mapquest, OpenCage, Google Premier
+    apiKey: config.get('geocoder.api_key'), // for Mapquest, OpenCage, Google Premier
     formatter: null         // 'gpx', 'string', ...
 }
+
 let History=require('../models/history');
 let User=require('../models/user');
 const geocoder=NodeGeocoder(options);
@@ -163,7 +164,7 @@ module.exports=(server,Siofu)=>{
                 const newNamePath=path.join(__dirname,"../public/uploads/profile_pictures/"+newFileName.trim().toLowerCase());
                 const newNameRelativePath="/uploads/profile_pictures/"+newFileName.trim().toLowerCase();//this is used by browser to display file later
 
-                changePicture(oldNamePath,newNamePath)
+                changePicture2(oldNamePath,newNamePath)
                     .then(newPath=>{
                         if(newPath){
                             return User.findOne({username: uploader_username})

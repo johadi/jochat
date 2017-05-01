@@ -32,10 +32,36 @@
 
                 <div class="clearfix"></div>
                 <form class="form-horizontal forms" action="/profile" role="form" method="POST">
+                    <% if(message.length>0) {%>
+                    <% if(message=='success'){%>
+                    <div class="alert alert-success alert-dismissible text-center">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times</span>
+                        </button>
+                        Profile updated successfully
+                    </div>
+                    <%}else if(message=='fail'){%>
+                    <div class="alert alert-danger alert-dismissible text-center">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times</span>
+                        </button>
+                        Email and Fullname must be provided
+                    </div>
+                    <%}else if(message=='error'){%>
+                    <div class="alert alert-danger alert-dismissible text-center">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times</span>
+                        </button>
+                        Error occurred...Try again
+                    </div>
+                    <%}%>
+                    <%}%>
+
                     <div class="form-group">
                         <label for="email" class="col-sm-3 control-label">Username</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="email" name="email" value="<%=user.username%>" disabled >
+                            <input type="text" class="form-control" value="<%=user.username%>" disabled >
+                            <input type="hidden" id="username" name="username" value="<%=user.username%>" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -47,19 +73,19 @@
                     <div class="form-group ">
                         <label for="name" class="col-sm-3 control-label">Full Name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="name" required="" name="full_name" value="<%=user.fullname%>">
+                            <input type="text" class="form-control" id="fullname" required="" name="fullname" value="<%=user.fullname%>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="phone1" class="col-sm-3 control-label">Phone No</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="phone1" name="mobile" value="08163041269">
+                            <input type="text" class="form-control" id="phone" name="phone" value="<%=user.phone%>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="phone2" class="col-sm-3 control-label">Preferred Language</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="phone2" name="alternative_mobile" value="NodeJs">
+                            <input type="text" class="form-control" id="lang" name="lang" value="<%=user.preferred_language%>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -70,4 +96,7 @@
                 </form>
         </div>
     </div>
+    <!--Chat modal-->
+    <% include ../partials/chat_modal.ejs%>
+    <!--End of Chat modal -->
 </div>

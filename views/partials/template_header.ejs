@@ -6,7 +6,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="#page-top">DevChat</a>
+            <a class="navbar-brand" href="/?#page-top">DeveChat</a>
             <%if(user){%>
             <a class="navbar-brand" style="text-transform: capitalize" href="/home">Home</a>
             <%}%>
@@ -35,7 +35,7 @@
                     <a style="text-transform: capitalize" href="/profile" class="portfolio-link" data-toggle="modal"><%=name[0]%></a>
                 </li>
                 <li class="page-scroll">
-                    <a style="text-transform: capitalize" href="#" class="portfolio-link" data-toggle="modal">Rooms</a>
+                    <a style="text-transform: capitalize" data-toggle="modal" href="#chat-modal" class="portfolio-link">Rooms</a>
                 </li>
                 <li class="page-scroll">
                     <a style="text-transform: capitalize" href="/logout">Logout</a>

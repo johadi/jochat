@@ -1,0 +1,37 @@
+<!-- Chat Modal -->
+<div class="modal fade" id="chat-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Developers are online to chat with you</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" action="/chat" method="get">
+                    <div class="form-group" id="active_rooms">
+                        <label class="text-success" for="room">Pick a room to start chatting with developers</label>
+                        <select class="form-control" id="room" name="room">
+                            <option>-Select Room-</option>
+                            <option>Angular</option>
+                            <option>Angular 2</option>
+                            <option>React</option>
+                            <option>NodeJs</option>
+                            <option>PHP</option>
+                            <option>Python</option>
+                            <option>Java</option>
+                            <option>Android</option>
+                            <option>C++</option>
+                            <option>C#</option>
+                            <option>Ruby</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="name" value="<%=user.username%>" />
+                    <button type="submit" class="btn btn-success"><i class="fa fa-handshake-o"></i> Join room</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
