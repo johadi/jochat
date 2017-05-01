@@ -272,7 +272,7 @@ module.exports=(server,Siofu)=>{
                                         fs.unlink(oldPath,(err)=>{
                                             if(err) throw err;
                                             //console.log(result);
-                                            message.path=result.url;
+                                            message.path=result.secure_url;
                                             cb(null,user_info);
                                         });
                                 },

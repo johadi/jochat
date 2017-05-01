@@ -81,7 +81,7 @@ let changePicture=(old_path,new_path,cloud_path,cloudinary)=>{
                 fs.unlink(old_path,(err)=>{
                     if(err) return reject(err);
 
-                    return resolve(result.url);
+                    return resolve(result.secure_url);
                 });
             },
             {
