@@ -205,7 +205,7 @@
         <p class="text-center {{file_pull}}"></p>
         <div class="chat-body1 clearfix user-div-bg">
             <p class="user-div-bg-color">{{text}}</p>
-            <div class="chat_time {{location_pull}}">{{createdAt}} <span style="color: green;font-size: 11px;">{{location}}</span></div>
+            <div class="chat_time {{location_pull}}">{{createdAt}} <span style="color: lightseagreen;font-size: 11px;">{{location}}</span></div>
         </div>
     </li>
 </script>
@@ -218,7 +218,7 @@
                 <p class="user-div-bg-color"><img style="min-width: 200px; min-height: 200px;" src="{{url}}" alt="message image" /></p>
                 {{text}}
             </p>
-            <div class="chat_time {{location_pull}} user-div-bg">{{createdAt}} <span style="color: green; font-size: 11px;">{{location}}</span></div>
+            <div class="chat_time {{location_pull}} user-div-bg">{{createdAt}} <span style="color: lightseagreen; font-size: 11px;">{{location}}</span></div>
         </div>
     </li>
 </script>
@@ -226,12 +226,12 @@
 <script id="message-template" type="text/template">
     <li class="left clearfix {{admin_chat}}" >
         <p class="text-center chat-img1 {{file_pull}}">
-            <span style="color: green"><strong>{{from}}</strong></span><br>
             <img src="{{avatar}}" alt="User Avatar" class="img-circle">
         </p>
         <div class="chat-body1 clearfix">
+            <p style="color: lightseagreen; background-color: inherit"><strong>{{from}}</strong></p>
             <p>{{text}}</p>
-            <div class="chat_time {{location_pull}}">{{createdAt}} <span style="color: green;font-size: 11px;">{{location}}</span></div>
+            <div class="chat_time {{location_pull}}">{{createdAt}} <span style="color: lightseagreen;font-size: 11px;">{{location}}</span></div>
         </div>
     </li>
 </script>
@@ -239,15 +239,17 @@
 <script id="message-template-for-file" type="text/template">
     <li class="left clearfix {{admin_chat}}">
         <p class="text-center chat-img1 {{file_pull}}">
-            <span style="color: green"><strong>{{from}}</strong></span><br>
             <img src="{{avatar}}" alt="User Avatar" class="img-circle">
         </p>
         <div class="chat-body1 clearfix">
-            <p>
-            <p><img style="min-width: 200px; min-height: 200px;" src="{{url}}" alt="message image" /></p>
-            {{text}}
+            <p style="color: lightseagreen; background-color: inherit"><strong>{{from}}</strong></p>
+            <p style="margin-bottom: 0">
+                <img style="min-width: 200px; min-height: 200px;" src="{{url}}" alt="message image" />
             </p>
-            <div class="chat_time {{location_pull}}">{{createdAt}} <span style="color: green; font-size: 11px;">{{location}}</span></div>
+            <p>
+                {{text}}
+            </p>
+            <div class="chat_time {{location_pull}}">{{createdAt}} <span style="color: lightseagreen; font-size: 11px;">{{location}}</span></div>
         </div>
     </li>
 </script>

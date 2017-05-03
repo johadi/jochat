@@ -3,7 +3,7 @@
  */
 function processLogin(username,password){
     var data={username: username,password: password};
-    // var url="http://localhost:5000/user/login";
+    //var url="http://localhost:5000/user/login";
     var url="https://devechat.herokuapp.com/user/login";
     $.ajax({
         type: "POST",
@@ -42,7 +42,7 @@ function processLogin(username,password){
 
 function processSignup(username,fullname,email,password){
     var data={username: username, fullname: fullname,email: email,password: password};
-    // var url="http://localhost:5000/user/signup";
+    //var url="http://localhost:5000/user/signup";
     var url="https://devechat.herokuapp.com/user/signup";
     $.ajax({
         type: "POST",
