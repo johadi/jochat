@@ -1,5 +1,6 @@
 ## jochat
- **jochat** is a chat application that allows developers to chat with one another instantly in a group.
+ **jochat** is a chat application that allows developers to chat with one another instantly in a group. Visit the live app at
+  [https://devechat.herokuapp.com](https://devechat.herokuapp.com) 
 ### What a User can do with the application
 - User can sign up and sign in to the application
 - user can join a group
