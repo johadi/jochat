@@ -1,3 +1,4 @@
+require('dotenv').load();
 const socketIO=require('socket.io');
 const fs=require('fs');
 const moment=require('moment');
@@ -19,19 +20,19 @@ let User=require('../models/user');
 
 //settings for geocoder
 const options = {
-    provider: config.get('geocoder.provider'),
+    provider: process.env.GEOCODER_PROVIDER,
     // Optional depending on the providers
     httpAdapter: 'https', // Default
-    apiKey: config.get('geocoder.api_key'), // for Mapquest, OpenCage, Google Premier
+    apiKey: process.env.GEOCODER_API_KEY, // for Mapquest, OpenCage, Google Premier
     formatter: null         // 'gpx', 'string', ...
 }
 const geocoder=NodeGeocoder(options);
 
 //settings for cloudinary
 cloudinary.config({
-    cloud_name:  config.get('cloudinary.cloud_name'),
-    api_key: config.get('cloudinary.api_key'),
-    api_secret: config.get('cloudinary.api_secret')
+    cloud_name:  process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 

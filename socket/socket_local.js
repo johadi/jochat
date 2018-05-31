@@ -1,3 +1,4 @@
+require('dotenv').load();
 const socketIO=require('socket.io');
 const fs=require('fs');
 const moment=require('moment');
@@ -12,10 +13,10 @@ const {ChattingUsers}=require('../utils/chattingUsers');
 const NodeGeocoder=require('node-geocoder');
 
 const options = {
-    provider: config.get('geocoder.provider'),
+    provider: process.env.GEOCODER_PROVIDER,
     // Optional depending on the providers
     httpAdapter: 'https', // Default
-    apiKey: config.get('geocoder.api_key'), // for Mapquest, OpenCage, Google Premier
+    apiKey: process.env.GEOCODER_API_KEY, // for Mapquest, OpenCage, Google Premier
     formatter: null         // 'gpx', 'string', ...
 }
 

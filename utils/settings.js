@@ -1,6 +1,7 @@
 /**
  * Created by ILYASANATE on 12/04/2017.
  */
+require('dotenv').load();
 var session=require("express-session");
 var MongoStore=require("connect-mongo")(session);
 var passport=require("passport");
@@ -12,7 +13,7 @@ module.exports=function(app){
         resave :true,
         saveUninitialized: true,
         secret: "Cat Key",
-        store: new MongoStore({url:config.get("db.url"),autoReconnect: true})
+        store: new MongoStore({url: process.env.MONGODB_URI, autoReconnect: true})
     }));
 
     app.use(flash());

@@ -9,10 +9,5 @@
   "geocoder": {
     "api_key": "1028bf26864cc6922da7",
     "provider": "locationiq"
-  },
-  "cloudinary": {
-    "api_key": "752993747339659",
-    "api_secret": "5FzXdCawGzDGWLOOl4aatoCDtyg",
-    "cloud_name": "devechat"
   }
 }

@@ -6,7 +6,6 @@ const engine=require('ejs-mate');
 const logger=require('morgan');
 const cookieParser=require('cookie-parser');
 const Siofu=require('socketio-file-upload');
-const config=require('config');
 
 const mongooseSetting=require('./utils/mongoose_setting');
 mongooseSetting();
@@ -29,7 +28,7 @@ app.use(logger('dev'));
 app.set('views',path.join(__dirname,'views'));
 app.engine('ejs',engine);
 app.set('view engine','ejs');
-app.set('port',process.env.PORT || config.get('app.port'))
+app.set('port', process.env.PORT || 5000);
 
 let socket=require('./socket/socket');
 // let socket=require('./socket/socket_local');
@@ -37,12 +36,9 @@ let socket=require('./socket/socket');
 settings(app);
 socket(server,Siofu);
 routeIndex(app);
-// app.get('/chat',(req,res)=>{
-//     res.render('chat');
-// });
+
 server.listen(app.get('port'),(err)=>{
     if(err) return console.log(err);
     console.log('app running on port '+app.get('port'));
 });
-//siofu.listen(server);
 
